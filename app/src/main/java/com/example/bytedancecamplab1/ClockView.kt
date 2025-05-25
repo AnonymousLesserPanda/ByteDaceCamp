@@ -64,7 +64,7 @@ class ClockView @JvmOverloads constructor(
     private fun drawBackground(canvas: Canvas) {
         val centerX = width / 2f
         val centerY = height / 2f
-        val radius = Math.min(centerX, centerY) - 20
+        val radius = centerX.coerceAtMost(centerY) - 20
 
         // 表盘圆
         paint.color = Color.BLACK
@@ -72,7 +72,7 @@ class ClockView @JvmOverloads constructor(
 
         // 刻度线
         paint.strokeWidth = 3f
-        for (i in 0..59) {
+        for (i in 0..360) {
             val angle = Math.toRadians(i.toDouble()).toFloat()
             val startX = centerX + (radius - 20) * sin(angle)
             val startY = centerY - (radius - 20) * cos(angle)
@@ -85,7 +85,9 @@ class ClockView @JvmOverloads constructor(
     private fun drawHands(canvas: Canvas) {
         calendar.timeInMillis = System.currentTimeMillis()
 
-        val radius = 1.0f
+        val centerX = width / 2f
+        val centerY = height / 2f
+        val radius = centerX.coerceAtMost(centerY) - 20
 
         // 计算角度（时针含分钟偏移）
         val hour = calendar.get(Calendar.HOUR) % 12
@@ -97,8 +99,8 @@ class ClockView @JvmOverloads constructor(
         val secondAngle = second * 6f
 
         // 绘制指针
-        drawHand(canvas, hourAngle, radius * 0.5f, 10f, Color.BLACK)
-        drawHand(canvas, minuteAngle, radius * 0.7f, 6f, Color.BLACK)
+        drawHand(canvas, hourAngle, radius * 0.5f, 10f, Color.BLUE)
+        drawHand(canvas, minuteAngle, radius * 0.7f, 6f, Color.GREEN)
         drawHand(canvas, secondAngle, radius * 0.9f, 2f, Color.RED)
     }
 
@@ -106,14 +108,14 @@ class ClockView @JvmOverloads constructor(
         canvas: Canvas,
         angle: Float,
         length: Float,
-        width: Float,
+        handWidth: Float,
         color: Int
     ) {
         val centerX = width / 2f
         val centerY = height / 2f
 
         paint.color = color
-        paint.strokeWidth = width
+        paint.strokeWidth = handWidth
         paint.style = Paint.Style.FILL
 
         val startX = centerX + (length - 10) * sin(Math.toRadians(angle.toDouble())).toFloat()

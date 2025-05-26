@@ -81,11 +81,15 @@ class ClockView @JvmOverloads constructor(
         canvas.drawCircle(centerX, centerY, radius, paint)
 
         // 刻度线
-        paint.strokeWidth = 3f
         for (i in 0..360 step 6) {
+            val length = if (i % 30 == 0) {
+                60
+            } else {
+                20
+            }
             val angle = Math.toRadians(i.toDouble()).toFloat()
-            val startX = centerX + (radius - 20) * sin(angle)
-            val startY = centerY - (radius - 20) * cos(angle)
+            val startX = centerX + (radius - length) * sin(angle)
+            val startY = centerY - (radius - length) * cos(angle)
             val stopX = centerX + radius * sin(angle)
             val stopY = centerY - radius * cos(angle)
             canvas.drawLine(startX, startY, stopX, stopY, paint)
@@ -111,7 +115,7 @@ class ClockView @JvmOverloads constructor(
         // 绘制指针
         drawHand(canvas, hourAngle, radius * 0.5f, 10f, Color.BLUE)
         drawHand(canvas, minuteAngle, radius * 0.7f, 6f, Color.GREEN)
-        drawHand(canvas, secondAngle, radius * 0.9f, 2f, Color.RED)
+        drawHand(canvas, secondAngle, radius * 1.0f, 2f, Color.RED)
     }
 
     private fun drawHand(
@@ -126,8 +130,8 @@ class ClockView @JvmOverloads constructor(
 
         setupHandPaint(handWidth, color)
 
-        val startX = centerX + (length - 10) * sin(Math.toRadians(angle.toDouble())).toFloat()
-        val startY = centerY - (length - 10) * cos(Math.toRadians(angle.toDouble())).toFloat()
+        val startX = centerX
+        val startY = centerY
         val stopX = centerX + length * sin(Math.toRadians(angle.toDouble())).toFloat()
         val stopY = centerY - length * cos(Math.toRadians(angle.toDouble())).toFloat()
 

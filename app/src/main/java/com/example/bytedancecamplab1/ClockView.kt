@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import java.util.Calendar
@@ -44,9 +45,13 @@ class ClockView @JvmOverloads constructor(
     }
 
     override fun run() {
-        while (isRunning) {
-            draw()
-            Thread.sleep(1000) // 每秒刷新
+        try {
+            while (isRunning) {
+                draw()
+                Thread.sleep(100) // 每0.1秒刷新
+            }
+        } catch (e: Exception) {
+            Log.e("ClockView", "Draw error: ${e.message}")
         }
     }
 
@@ -64,15 +69,16 @@ class ClockView @JvmOverloads constructor(
     private fun drawBackground(canvas: Canvas) {
         val centerX = width / 2f
         val centerY = height / 2f
-        val radius = centerX.coerceAtMost(centerY) - 20
+        val radius = centerX.coerceAtMost(centerY) - 10f
 
         // 表盘圆
         paint.color = Color.BLACK
+        paint.style= Paint.Style.STROKE
         canvas.drawCircle(centerX, centerY, radius, paint)
 
         // 刻度线
         paint.strokeWidth = 3f
-        for (i in 0..360) {
+        for (i in 0..360 step 6) {
             val angle = Math.toRadians(i.toDouble()).toFloat()
             val startX = centerX + (radius - 20) * sin(angle)
             val startY = centerY - (radius - 20) * cos(angle)

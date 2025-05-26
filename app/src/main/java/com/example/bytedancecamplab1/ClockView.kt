@@ -23,13 +23,18 @@ class ClockView @JvmOverloads constructor(
 
     init {
         holder.addCallback(this)
-        setupPaint()
     }
 
-    private fun setupPaint() {
+    private fun setupBackgroundPaint() {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 5f
         paint.color = Color.BLACK
+    }
+
+    private fun setupHandPaint(handWidth: Float, color: Int) {
+        paint.style = Paint.Style.FILL
+        paint.strokeWidth = handWidth
+        paint.color = color
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
@@ -58,11 +63,11 @@ class ClockView @JvmOverloads constructor(
     private fun draw() {
         val canvas = holder.lockCanvas() ?: return
         try {
-            canvas.drawColor(Color.WHITE) // 清屏
-            drawBackground(canvas)       // 绘制表盘
-            drawHands(canvas)            // 绘制指针
+            canvas.drawColor(Color.WHITE)
+            drawBackground(canvas)
+            drawHands(canvas)
         } finally {
-            holder.unlockCanvasAndPost(canvas) // 提交绘制
+            holder.unlockCanvasAndPost(canvas)
         }
     }
 
@@ -72,8 +77,7 @@ class ClockView @JvmOverloads constructor(
         val radius = centerX.coerceAtMost(centerY) - 10f
 
         // 表盘圆
-        paint.color = Color.BLACK
-        paint.style= Paint.Style.STROKE
+        setupBackgroundPaint()
         canvas.drawCircle(centerX, centerY, radius, paint)
 
         // 刻度线
@@ -120,9 +124,7 @@ class ClockView @JvmOverloads constructor(
         val centerX = width / 2f
         val centerY = height / 2f
 
-        paint.color = color
-        paint.strokeWidth = handWidth
-        paint.style = Paint.Style.FILL
+        setupHandPaint(handWidth, color)
 
         val startX = centerX + (length - 10) * sin(Math.toRadians(angle.toDouble())).toFloat()
         val startY = centerY - (length - 10) * cos(Math.toRadians(angle.toDouble())).toFloat()

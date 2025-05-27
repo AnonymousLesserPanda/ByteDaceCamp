@@ -1,6 +1,8 @@
 package com.example.bytedancecamplab1
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
 
 class MainActivity : ComponentActivity() {
@@ -13,5 +15,13 @@ class MainActivity : ComponentActivity() {
 
         // 初始化时钟视图
         clockView = findViewById(R.id.clockView)
+
+        // 跳转到闹钟
+        val buttonToAlarm = findViewById<Button>(R.id.buttonToAlarm)
+        buttonToAlarm.setOnClickListener {
+            val  intent = Intent(this,Alarm::class.java)
+            startActivity(intent)
+        }
+
     }
 }

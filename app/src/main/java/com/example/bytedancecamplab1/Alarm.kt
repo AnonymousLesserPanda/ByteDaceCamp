@@ -74,10 +74,9 @@ class Alarm : AppCompatActivity() {
     }
 
     private fun updateAlarmTimeDisplay(hour: Int, minute: Int) {
-        val timeFormat = if (hour < 12) "AM" else "PM"
-        val displayHour = if (hour > 12) hour - 12 else hour
-        textViewAlarmTime.text =
-            "闹钟时间：${displayHour}:${minute.toString().padStart(2, '0')} $timeFormat"
+        val displayHour = hour.toString().padStart(2, '0')
+        val displayMinute = minute.toString().padStart(2, '0')
+        textViewAlarmTime.text = "闹钟时间：$displayHour:$displayMinute"
     }
 
     private fun cancelAlarm() {

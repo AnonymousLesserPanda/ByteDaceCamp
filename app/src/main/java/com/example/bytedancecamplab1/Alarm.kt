@@ -2,9 +2,10 @@ package com.example.bytedancecamplab1
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -13,6 +14,9 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import android.provider.Settings
+import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 
 class Alarm : AppCompatActivity() {
 
@@ -20,15 +24,24 @@ class Alarm : AppCompatActivity() {
     private lateinit var timePicker: TimePicker
     private lateinit var buttonSetAlarm: Button
     private lateinit var textViewAlarmTime: TextView
-    private var alarmRequestCode = 1000
+    private var alarmRequestCode = 1001
 
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_alarm)
 
-        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        // 跳转系统设置页面请求精确闹钟权限
+        if (!alarmManager.canScheduleExactAlarms()) {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            intent.data = "package:${packageName}".toUri()
+            startActivity(intent)
+        }
+
         timePicker = findViewById(R.id.timePicker)
         timePicker.setIs24HourView(true)
         buttonSetAlarm = findViewById(R.id.buttonSetAlarm)
@@ -51,7 +64,7 @@ class Alarm : AppCompatActivity() {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        // 为什么要写class.java
+
         val alarmIntent = Intent(this, AlarmReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(
                 this,

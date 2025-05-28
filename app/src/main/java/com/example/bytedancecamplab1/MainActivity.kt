@@ -22,6 +22,5 @@ class MainActivity : ComponentActivity() {
             val  intent = Intent(this,Alarm::class.java)
             startActivity(intent)
         }
-
     }
 }

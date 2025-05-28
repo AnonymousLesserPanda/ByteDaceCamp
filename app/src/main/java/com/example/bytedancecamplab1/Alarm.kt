@@ -30,6 +30,7 @@ class Alarm : AppCompatActivity() {
 
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         timePicker = findViewById(R.id.timePicker)
+        timePicker.setIs24HourView(true)
         buttonSetAlarm = findViewById(R.id.buttonSetAlarm)
         textViewAlarmTime = findViewById(R.id.textViewAlarmTime)
 

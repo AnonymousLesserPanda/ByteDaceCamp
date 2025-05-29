@@ -2,7 +2,6 @@ package com.example.bytedancecamplab1
 
 import android.Manifest
 import android.R
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -35,7 +34,7 @@ class AlarmReceiver : BroadcastReceiver() {
             ).apply {
                 description = "Channel for alarm alerts"
                 enableLights(true)
-                lightColor = context.getColor(android.R.color.holo_red_dark)
+                lightColor = context.getColor(R.color.holo_red_dark)
                 enableVibration(true)
             }
 
@@ -50,12 +49,10 @@ class AlarmReceiver : BroadcastReceiver() {
         val notificationManager = NotificationManagerCompat.from(context)
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_dialog_alert) // 使用系统警告图标
+            .setSmallIcon(R.drawable.ic_dialog_alert)
             .setContentTitle("闹钟")
             .setContentText("时间到！")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true) // 点击后自动取消通知
-            .setVibrate(longArrayOf(1000, 1000, 1000, 1000)) // 震动模式
             .build()
 
         notificationManager.notify(NOTIFICATION_ID, notification)

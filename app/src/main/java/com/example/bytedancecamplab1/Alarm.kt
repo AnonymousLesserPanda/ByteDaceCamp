@@ -85,7 +85,7 @@ class Alarm : AppCompatActivity() {
             )
         }
         try {
-            alarmManager.setExact(
+            alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
                 alarmIntent
@@ -117,6 +117,5 @@ class Alarm : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cancelAlarm()
     }
 }

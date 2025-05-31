@@ -41,19 +41,18 @@ class UserDataBaseHelper(context: Context) :
     fun addUser(userName: String, password: String): Long {
         val db: SQLiteDatabase = writableDatabase
         val values = ContentValues().apply {
-            put("user_name", userName)
-            put("password", password)
+            put(columns[1], userName)
+            put(columns[2], password)
         }
-        return db.insert("user_info", null, values)
+        return db.insert(TABLE_NAME, null, values)
     }
 
-    @SuppressLint("Range") // 仅在确认列名存在时使用
     fun findUserByUserName(userName: String): List<UserInfo> {
         val db: SQLiteDatabase = readableDatabase
         val cursor: Cursor = db.query(
             TABLE_NAME,
             columns,
-            "${columns[0]} = ?",
+            "${columns[1]} = ?",
             arrayOf(userName),
             null, null, null
         )

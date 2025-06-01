@@ -14,7 +14,7 @@ class UserDataBaseHelper(context: Context) :
         private const val DATABASE_NAME = "User.db"
         private const val DATABASE_VERSION = 1
         private const val TABLE_NAME = "user_info"
-        private val columns = arrayOf("id", "userName", "password")
+        private val userInfoColumns = arrayOf("id", "userName", "password")
     }
 
     data class UserInfo(
@@ -26,9 +26,9 @@ class UserDataBaseHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = """
             CREATE TABLE $TABLE_NAME(
-                ${columns[0]} INTEGER PRIMARY KEY AUTOINCREMENT,
-                ${columns[1]} TEXT NOT NULL,
-                ${columns[2]} TEXT NOT NULL
+                ${userInfoColumns[0]} INTEGER PRIMARY KEY AUTOINCREMENT,
+                ${userInfoColumns[1]} TEXT NOT NULL,
+                ${userInfoColumns[2]} TEXT NOT NULL
             )
         """.trimIndent()
         db?.execSQL(createTableQuery)
@@ -41,8 +41,8 @@ class UserDataBaseHelper(context: Context) :
     fun addUser(userName: String, password: String): Long {
         val db: SQLiteDatabase = writableDatabase
         val values = ContentValues().apply {
-            put(columns[1], userName)
-            put(columns[2], password)
+            put(userInfoColumns[1], userName)
+            put(userInfoColumns[2], password)
         }
         return db.insert(TABLE_NAME, null, values)
     }
@@ -51,16 +51,16 @@ class UserDataBaseHelper(context: Context) :
         val db: SQLiteDatabase = readableDatabase
         val cursor: Cursor = db.query(
             TABLE_NAME,
-            columns,
-            "${columns[1]} = ?",
+            userInfoColumns,
+            "${userInfoColumns[1]} = ?",
             arrayOf(userName),
             null, null, null
         )
         val res = mutableListOf<UserInfo>()
         try {
-            val idIndex = cursor.getColumnIndex(columns[0])
-            val userNameIndex = cursor.getColumnIndex(columns[1])
-            val passwordIndex = cursor.getColumnIndex(columns[2])
+            val idIndex = cursor.getColumnIndex(userInfoColumns[0])
+            val userNameIndex = cursor.getColumnIndex(userInfoColumns[1])
+            val passwordIndex = cursor.getColumnIndex(userInfoColumns[2])
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idIndex)

@@ -60,7 +60,8 @@ class Login : AppCompatActivity() {
             putBoolean("pass", true)
             putLong("userId", user.id)
         }
-        // TODO:跳转到后续界面
+        val intent = Intent(this, Preview::class.java)
+        startActivity(intent)
     }
 
     private fun register() {

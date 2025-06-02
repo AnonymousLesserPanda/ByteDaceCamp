@@ -50,11 +50,11 @@ class UserDataBaseHelper(context: Context) :
     fun findUserByUserName(userName: String): List<UserInfo> {
         val db: SQLiteDatabase = readableDatabase
         val cursor: Cursor = db.query(
-            TABLE_NAME,
-            userInfoColumns,
-            "${userInfoColumns[1]} = ?",
-            arrayOf(userName),
-            null, null, null
+            /* table = */ TABLE_NAME,
+            /* columns = */ userInfoColumns,
+            /* selection = */ "${userInfoColumns[1]} = ?",
+            /* selectionArgs = */ arrayOf(userName),
+            /* groupBy = */ null, /* having = */ null, /* orderBy = */ null
         )
         val res = mutableListOf<UserInfo>()
         try {

@@ -1,5 +1,6 @@
 package com.example.bytedancecamplab2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.content.edit
 
 class Login : AppCompatActivity() {
     private var userName = ""
@@ -52,6 +54,11 @@ class Login : AppCompatActivity() {
         if (password != user.password) {
             show("用户名或密码错误")
             return
+        }
+        val sharedPreferences = getSharedPreferences("userStatus", MODE_PRIVATE)
+        sharedPreferences.edit {
+            putBoolean("pass", true)
+            putLong("userId", user.id)
         }
         // TODO:跳转到后续界面
     }

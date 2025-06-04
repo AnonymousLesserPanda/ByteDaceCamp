@@ -3,6 +3,7 @@ package com.example.bytedancecamplab2
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.DialogTitle
@@ -69,11 +70,11 @@ class Note() : AppCompatActivity() {
             noteEditText.setText(note)
 
         } catch (e: FileNotFoundException) {
-            Log.e("Note", "文件不存在", e)
+            show("文件不存在")
         } catch (e: IOException) {
-            Log.e("Note", "IO异常", e)
+            show("IO异常")
         } catch (e: JSONException) {
-            Log.e("Note", "解析错误", e)
+            show("解析错误")
         }
     }
 
@@ -90,13 +91,13 @@ class Note() : AppCompatActivity() {
             }
 
         } catch (e: JSONException) {
-            Log.e("Note", "键值错误", e)
+            show("键值错误")
         } catch (e: FileNotFoundException) {
-            Log.e("Note", "路径错误", e)
+            show("路径错误")
         } catch (e: IOException) {
-            Log.e("Note", "写入异常", e)
+            show("写入异常")
         } catch (e: SecurityException) {
-            Log.e("Note", "权限异常", e)
+            show("权限错误")
         }
     }
 
@@ -120,5 +121,10 @@ class Note() : AppCompatActivity() {
         } else {
             infoCard.updateInfoCard(id, title, brief)
         }
+    }
+
+    private fun show(message: String) {
+        Log.i("Note", message)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

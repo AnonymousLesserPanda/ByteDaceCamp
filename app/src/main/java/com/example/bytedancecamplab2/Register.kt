@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -60,6 +61,7 @@ class Register : AppCompatActivity() {
     }
 
     private fun show(message: String) {
-        Log.i("register", message)
+        Log.i("Register", message)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

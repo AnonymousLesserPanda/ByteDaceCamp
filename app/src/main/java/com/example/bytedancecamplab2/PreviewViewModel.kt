@@ -2,6 +2,7 @@ package com.example.bytedancecamplab2
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,7 @@ import kotlinx.coroutines.withContext
 
 class PreviewViewModel(application: Application) : AndroidViewModel(application) {
     private val _infoCardList = MutableLiveData<List<InfoCard>>()
-    val infoCardList: LiveData<List<InfoCard>> get() = _infoCardList
+    val infoCardList: MutableLiveData<List<InfoCard>> get() = _infoCardList
 
     init {
         loadInfoCardForCurrentUser()

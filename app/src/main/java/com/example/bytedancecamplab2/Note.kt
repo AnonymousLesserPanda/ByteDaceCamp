@@ -1,5 +1,6 @@
 package com.example.bytedancecamplab2
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -8,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
@@ -119,6 +122,13 @@ class Note : AppCompatActivity() {
         } else {
             infoCard.updateInfoCard(id, title, brief)
         }
+        show("笔记已保存")
+        sendRefreshBroadcast()
+    }
+
+    private fun sendRefreshBroadcast() {
+        val intent = Intent("com.example.ACTION_REFRESH_PREVIEW")
+        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
     }
 
     private fun show(message: String) {

@@ -54,12 +54,12 @@ class NoteDataBaseHelper(context: Context) :
                 put(infoCardColumns[3], brief)
                 put(infoCardColumns[4], getFormattedTimestamp())
             }
-            db.insert(TABLE_NAME, null, values)
+            val ret = db.insert(TABLE_NAME, null, values)
+            Log.i("DataBase", "新建笔记成功")
+            ret
         } catch (e: SQLiteException) {
             Log.e("DataBase", "新建笔记失败", e)
             -1L
-        } finally {
-            db.close()
         }
     }
 
@@ -80,8 +80,6 @@ class NoteDataBaseHelper(context: Context) :
         } catch (e: SQLiteException) {
             Log.e("DataBase", "更新笔记失败", e)
             -1L
-        } finally {
-            db.close()
         }
     }
 

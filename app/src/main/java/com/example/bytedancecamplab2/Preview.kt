@@ -10,14 +10,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bytedancecamplab2.NoteDataBaseHelper.InfoCard
 
 class Preview : AppCompatActivity() {
     private lateinit var listRecyclerView: RecyclerView
     private lateinit var addButton: Button
     private lateinit var infoCardAdapter: InfoCardAdapter
-    private val infoCard = NoteDataBaseHelper(this)
-    private lateinit var infoCardList: List<InfoCard>
     private val viewModel: PreviewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +28,8 @@ class Preview : AppCompatActivity() {
         }
 
         //组件绑定
-        listRecyclerView = findViewById<RecyclerView>(R.id.list_view)
-        addButton = findViewById<Button>(R.id.add_button)
+        listRecyclerView = findViewById(R.id.list_view)
+        addButton = findViewById(R.id.add_button)
 
         //初始化
         infoCardAdapter = InfoCardAdapter()

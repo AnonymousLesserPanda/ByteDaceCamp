@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bytedancecamplab2.NoteDataBaseHelper.InfoCard
 
 class InfoCardViewHolder(infoCardView: View) : RecyclerView.ViewHolder(infoCardView) {
-    var title: TextView = infoCardView.findViewById<TextView>(R.id.title)
-    var brief: TextView = infoCardView.findViewById<TextView>(R.id.brief)
-    var time: TextView = infoCardView.findViewById<TextView>(R.id.time)
+    private var title = infoCardView.findViewById<TextView>(R.id.title)
+    private var brief = infoCardView.findViewById<TextView>(R.id.brief)
+    private var time = infoCardView.findViewById<TextView>(R.id.time)
 
     fun bind(card: InfoCard) {
         title.text = card.title

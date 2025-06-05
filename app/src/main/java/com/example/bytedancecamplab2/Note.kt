@@ -6,19 +6,17 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.DialogTitle
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import kotlin.math.min
 
-class Note() : AppCompatActivity() {
+class Note : AppCompatActivity() {
     private lateinit var titleEditText: EditText
     private lateinit var noteEditText: EditText
     private lateinit var fileName: String
@@ -40,8 +38,8 @@ class Note() : AppCompatActivity() {
         fileName = "${id}.json"
 
         //绑定组件
-        titleEditText = findViewById<EditText>(R.id.title_input)
-        noteEditText = findViewById<EditText>(R.id.note_input)
+        titleEditText = findViewById(R.id.title_input)
+        noteEditText = findViewById(R.id.note_input)
 
         if (!isNew) {
             loadFile()

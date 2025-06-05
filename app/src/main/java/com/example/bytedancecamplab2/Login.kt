@@ -1,6 +1,5 @@
 package com.example.bytedancecamplab2
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -34,10 +33,10 @@ class Login : AppCompatActivity() {
         }
 
         //绑定组件
-        userNameEditText = findViewById<EditText>(R.id.user_name_input)
-        passwordEditText = findViewById<EditText>(R.id.password_input)
-        loginButton = findViewById<Button>(R.id.login_button)
-        registerButton = findViewById<Button>(R.id.register_button)
+        userNameEditText = findViewById(R.id.user_name_input)
+        passwordEditText = findViewById(R.id.password_input)
+        loginButton = findViewById(R.id.login_button)
+        registerButton = findViewById(R.id.register_button)
 
         loginButton.setOnClickListener { login() }
         registerButton.setOnClickListener { register() }

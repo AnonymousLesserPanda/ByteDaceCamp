@@ -30,7 +30,7 @@ class NoteDataBaseHelper(context: Context) :
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = """
-            CREATE TABLE ${NoteDataBaseHelper.Companion.TABLE_NAME}(
+            CREATE TABLE $TABLE_NAME(
                 ${infoCardColumns[0]} INTEGER PRIMARY KEY AUTOINCREMENT,
                 ${infoCardColumns[1]} INTEGER ,
                 ${infoCardColumns[2]} TEXT NOT NULL,
@@ -97,14 +97,12 @@ class NoteDataBaseHelper(context: Context) :
         val res = mutableListOf<InfoCard>()
         try {
             val idIndex = cursor.getColumnIndex(infoCardColumns[0])
-            val userIdIndex = cursor.getColumnIndex(infoCardColumns[1])
             val titleIndex = cursor.getColumnIndex(infoCardColumns[2])
             val briefIndex = cursor.getColumnIndex(infoCardColumns[3])
             val timeIndex = cursor.getColumnIndex(infoCardColumns[4])
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idIndex)
-                val userId = cursor.getLong(userIdIndex)
                 val title = cursor.getString(titleIndex)
                 val brief = cursor.getString(briefIndex)
                 val time = cursor.getString(timeIndex)

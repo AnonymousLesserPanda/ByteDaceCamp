@@ -1,6 +1,5 @@
 package com.example.bytedancecamplab2
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -59,12 +58,10 @@ class UserDataBaseHelper(context: Context) :
         val res = mutableListOf<UserInfo>()
         try {
             val idIndex = cursor.getColumnIndex(userInfoColumns[0])
-            val userNameIndex = cursor.getColumnIndex(userInfoColumns[1])
             val passwordIndex = cursor.getColumnIndex(userInfoColumns[2])
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idIndex)
-                val userName = cursor.getString(userNameIndex)
                 val password = cursor.getString(passwordIndex)
                 res.add(UserInfo(id, userName, password))
             }

@@ -6,6 +6,60 @@
                 {
                     "source": "C:\\Users\\RedPanda\\.gradle\\caches\\8.11.1\\transforms\\28cce65517e3c1f07756899863ed80d1\\transformed\\appcompat-1.7.1\\res\\values-night-v8\\values-night-v8.xml",
                     "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,48",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,125,209,293,389,491,593,4165",
+                        "endColumns": "69,83,83,95,101,101,93,88",
+                        "endOffsets": "120,204,288,384,486,588,682,4249"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\RedPanda\\.gradle\\caches\\8.11.1\\transforms\\abc57076f975ef2928f829348db80b35\\transformed\\material-1.12.0\\res\\values-night-v8\\values-night-v8.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51,52,53,54,55,56",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "1277,1352,1463,1552,1653,1760,1867,1966,2073,2176,2303,2391,2515,2617,2719,2835,2937,3051,3179,3295,3417,3553,3673,3807,3927,4039,4254,4371,4495,4625,4747,4885,5019,5135",
+                        "endColumns": "74,110,88,100,106,106,98,106,102,126,87,123,101,101,115,101,113,127,115,121,135,119,133,119,111,125,116,123,129,121,137,133,115,119",
+                        "endOffsets": "1347,1458,1547,1648,1755,1862,1961,2068,2171,2298,2386,2510,2612,2714,2830,2932,3046,3174,3290,3412,3548,3668,3802,3922,4034,4160,4366,4490,4620,4742,4880,5014,5130,5250"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\RedPanda\\code\\ByteDanceCamp\\app\\src\\main\\res\\values-night\\themes.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "102",
+                        "endLines": "14",
+                        "endColumns": "12",
+                        "endOffsets": "820"
+                    },
+                    "to": {
+                        "startLines": "9",
+                        "startColumns": "4",
+                        "startOffsets": "687",
+                        "endLines": "21",
+                        "endColumns": "12",
+                        "endOffsets": "1272"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\RedPanda\\.gradle\\daemon\\8.11.1\\com.example.bytedancecamplab3.app-mergeDebugResources-33:\\values-night-v8\\values-night-v8.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\RedPanda\\.gradle\\caches\\8.11.1\\transforms\\28cce65517e3c1f07756899863ed80d1\\transformed\\appcompat-1.7.1\\res\\values-night-v8\\values-night-v8.xml",
+                    "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
                         "startOffsets": "55,125,209,293,389,491,593,687",

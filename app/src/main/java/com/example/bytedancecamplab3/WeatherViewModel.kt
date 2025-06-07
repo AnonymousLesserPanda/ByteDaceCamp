@@ -6,8 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.bytedancecamplab3.network.RetrofitClient
-import com.example.bytedancecamplab3.network.WeatherResponse
+import com.example.bytedancecamplab3.network.CacheDataBaseHelper.WeatherRecord
+import com.example.bytedancecamplab3.network.WeatherServiceWithCache
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +18,9 @@ import java.io.InputStream
 import java.nio.charset.Charset
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-    private val _weather = MutableLiveData<WeatherResponse>()
-    val weather: LiveData<WeatherResponse> = _weather
-    private val weatherService = RetrofitClient.instance
+    private val _weather = MutableLiveData<WeatherRecord>()
+    val weather: LiveData<WeatherRecord> = _weather
+    private val weatherService = WeatherServiceWithCache(application)
     private val assetManager = application.assets
     private val ADCODE_FILE = "adcode.json"
     private val _cityCodeMap = MutableLiveData<Map<String, Map<String, String>>>()
@@ -46,13 +46,13 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 
     fun getWeatherByCityCode(province: String, city: String) {
         val cityCode = _cityCodeMap.value?.get(province)?.get(city)
-        Log.d("测试", "获取天气数据")
+        val date = Log.d("测试", "获取天气数据")
         viewModelScope.launch {
             try {
                 val response = withContext(Dispatchers.IO) {
                     weatherService.getWeather(cityCode!!)
                 }
-                _weather.postValue(response.body())
+                _weather.postValue(response)
             } catch (e: Exception) {
                 Log.e("WeatherViewModel", "获取天气数据错误", e)
             }

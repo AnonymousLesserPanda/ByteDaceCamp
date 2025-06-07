@@ -7,13 +7,12 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.AdapterView
-import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.bytedancecamplab3.network.WeatherResponse
+import com.example.bytedancecamplab3.network.CacheDataBaseHelper.WeatherRecord
 
 class MainActivity : AppCompatActivity() {
     private lateinit var weatherViewModel: WeatherViewModel
@@ -52,9 +51,9 @@ class MainActivity : AppCompatActivity() {
         weatherViewModel.weather.observe(this) { data -> updateWeather(data) }
     }
 
-    private fun updateWeather(data: WeatherResponse) {
+    private fun updateWeather(data: WeatherRecord) {
         Log.d("测试", "UI更新数据:${data}")
-        tempText.text = "温度：${data.forecasts[0].casts[0].daytemp}"
+        tempText.text = "温度：${data.temp}"
     }
 
     private fun bind() {

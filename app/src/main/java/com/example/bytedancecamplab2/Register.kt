@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,10 +31,10 @@ class Register : AppCompatActivity() {
         }
 
         //绑定组件
-        userNameEditText = findViewById<EditText>(R.id.user_name_input)
-        passwordEditText = findViewById<EditText>(R.id.password_input)
-        submitButton = findViewById<Button>(R.id.submit_button)
-        cancelButton = findViewById<Button>(R.id.cancel_button)
+        userNameEditText = findViewById(R.id.user_name_input)
+        passwordEditText = findViewById(R.id.password_input)
+        submitButton = findViewById(R.id.submit_button)
+        cancelButton = findViewById(R.id.cancel_button)
 
         submitButton.setOnClickListener { submit() }
         cancelButton.setOnClickListener { cancel() }
@@ -42,7 +43,7 @@ class Register : AppCompatActivity() {
     private fun submit() {
         userName = userNameEditText.text.toString()
         password = passwordEditText.text.toString()
-        if (!userInfo.findUserByUserName(userName).isEmpty()) {
+        if (userInfo.findUserByUserName(userName).isNotEmpty()) {
             show("用户名已存在")
             return
         }
@@ -60,6 +61,7 @@ class Register : AppCompatActivity() {
     }
 
     private fun show(message: String) {
-        Log.i("register", message)
+        Log.i("Register", message)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

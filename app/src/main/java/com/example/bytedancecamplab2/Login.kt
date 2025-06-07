@@ -1,11 +1,11 @@
 package com.example.bytedancecamplab2
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,10 +33,10 @@ class Login : AppCompatActivity() {
         }
 
         //绑定组件
-        userNameEditText = findViewById<EditText>(R.id.user_name_input)
-        passwordEditText = findViewById<EditText>(R.id.password_input)
-        loginButton = findViewById<Button>(R.id.login_button)
-        registerButton = findViewById<Button>(R.id.register_button)
+        userNameEditText = findViewById(R.id.user_name_input)
+        passwordEditText = findViewById(R.id.password_input)
+        loginButton = findViewById(R.id.login_button)
+        registerButton = findViewById(R.id.register_button)
 
         loginButton.setOnClickListener { login() }
         registerButton.setOnClickListener { register() }
@@ -71,6 +71,7 @@ class Login : AppCompatActivity() {
 
     private fun show(message: String) {
         Log.i("Login", message)
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -1,23 +1,25 @@
 package com.example.bytedancecamplab2
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.DialogTitle
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import kotlin.math.min
 
-class Note() : AppCompatActivity() {
+class Note : AppCompatActivity() {
     private lateinit var titleEditText: EditText
     private lateinit var noteEditText: EditText
     private lateinit var fileName: String
@@ -39,8 +41,8 @@ class Note() : AppCompatActivity() {
         fileName = "${id}.json"
 
         //绑定组件
-        titleEditText = findViewById<EditText>(R.id.title_input)
-        noteEditText = findViewById<EditText>(R.id.note_input)
+        titleEditText = findViewById(R.id.title_input)
+        noteEditText = findViewById(R.id.note_input)
 
         if (!isNew) {
             loadFile()
@@ -69,11 +71,11 @@ class Note() : AppCompatActivity() {
             noteEditText.setText(note)
 
         } catch (e: FileNotFoundException) {
-            Log.e("Note", "文件不存在", e)
+            show("文件不存在")
         } catch (e: IOException) {
-            Log.e("Note", "IO异常", e)
+            show("IO异常")
         } catch (e: JSONException) {
-            Log.e("Note", "解析错误", e)
+            show("解析错误")
         }
     }
 
@@ -90,13 +92,13 @@ class Note() : AppCompatActivity() {
             }
 
         } catch (e: JSONException) {
-            Log.e("Note", "键值错误", e)
+            show("键值错误")
         } catch (e: FileNotFoundException) {
-            Log.e("Note", "路径错误", e)
+            show("路径错误")
         } catch (e: IOException) {
-            Log.e("Note", "写入异常", e)
+            show("写入异常")
         } catch (e: SecurityException) {
-            Log.e("Note", "权限异常", e)
+            show("权限错误")
         }
     }
 
@@ -120,5 +122,17 @@ class Note() : AppCompatActivity() {
         } else {
             infoCard.updateInfoCard(id, title, brief)
         }
+        show("笔记已保存")
+        sendRefreshBroadcast()
+    }
+
+    private fun sendRefreshBroadcast() {
+        val intent = Intent("com.example.ACTION_REFRESH_PREVIEW")
+        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
+    }
+
+    private fun show(message: String) {
+        Log.i("Note", message)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

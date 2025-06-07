@@ -30,7 +30,7 @@ class NoteDataBaseHelper(context: Context) :
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = """
-            CREATE TABLE ${NoteDataBaseHelper.Companion.TABLE_NAME}(
+            CREATE TABLE $TABLE_NAME(
                 ${infoCardColumns[0]} INTEGER PRIMARY KEY AUTOINCREMENT,
                 ${infoCardColumns[1]} INTEGER ,
                 ${infoCardColumns[2]} TEXT NOT NULL,
@@ -54,12 +54,12 @@ class NoteDataBaseHelper(context: Context) :
                 put(infoCardColumns[3], brief)
                 put(infoCardColumns[4], getFormattedTimestamp())
             }
-            db.insert(TABLE_NAME, null, values)
+            val ret = db.insert(TABLE_NAME, null, values)
+            Log.i("DataBase", "新建笔记成功")
+            ret
         } catch (e: SQLiteException) {
             Log.e("DataBase", "新建笔记失败", e)
             -1L
-        } finally {
-            db.close()
         }
     }
 
@@ -80,8 +80,6 @@ class NoteDataBaseHelper(context: Context) :
         } catch (e: SQLiteException) {
             Log.e("DataBase", "更新笔记失败", e)
             -1L
-        } finally {
-            db.close()
         }
     }
 
@@ -97,14 +95,12 @@ class NoteDataBaseHelper(context: Context) :
         val res = mutableListOf<InfoCard>()
         try {
             val idIndex = cursor.getColumnIndex(infoCardColumns[0])
-            val userIdIndex = cursor.getColumnIndex(infoCardColumns[1])
             val titleIndex = cursor.getColumnIndex(infoCardColumns[2])
             val briefIndex = cursor.getColumnIndex(infoCardColumns[3])
             val timeIndex = cursor.getColumnIndex(infoCardColumns[4])
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idIndex)
-                val userId = cursor.getLong(userIdIndex)
                 val title = cursor.getString(titleIndex)
                 val brief = cursor.getString(briefIndex)
                 val time = cursor.getString(timeIndex)

@@ -2,27 +2,28 @@ package com.example.bytedancecamplab2
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import androidx.recyclerview.widget.ListAdapter
 import com.example.bytedancecamplab2.NoteDataBaseHelper.InfoCard
 
-class InfoCardAdapter(private val infoCardList: List<InfoCard>) : RecyclerView.Adapter<InfoCardViewHolder>() {
-
+class InfoCardAdapter : ListAdapter<InfoCard, InfoCardViewHolder>(InfoCardDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfoCardViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.info_card, parent, false)
-        val viewHolder = InfoCardViewHolder(view)
-        return viewHolder
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.info_card, parent, false)
+        return InfoCardViewHolder(view)
     }
 
-    override fun onBindViewHolder(
-        holder: InfoCardViewHolder,
-        position: Int
-    ) {
-        holder.title.text = infoCardList[position].title
-        holder.brief.text = infoCardList[position].brief
-        holder.time.text = infoCardList[position].time
+    override fun onBindViewHolder(holder: InfoCardViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+}
+
+class InfoCardDiffCallBack : ItemCallback<InfoCard>() {
+    override fun areContentsTheSame(oldItem: InfoCard, newItem: InfoCard): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getItemCount(): Int {
-        return infoCardList.size
+    override fun areItemsTheSame(oldItem: InfoCard, newItem: InfoCard): Boolean {
+        return oldItem == newItem
     }
 }

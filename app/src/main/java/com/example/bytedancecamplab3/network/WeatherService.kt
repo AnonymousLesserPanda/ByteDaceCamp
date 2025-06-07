@@ -19,7 +19,7 @@ data class WeatherResponse(
     val count: String,
     val info: String,
     val infocode: String,
-    val forecast: List<Forecast>
+    val forecasts: List<Forecast>
 )
 
 data class Forecast(

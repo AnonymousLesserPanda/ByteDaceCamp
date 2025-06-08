@@ -8,7 +8,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">ByteDanceCampLab3</string>
+    <string name="date">日期</string>
     <string name="temperature">温度</string>
+    <string name="weather">天气</string>
     <style name="Theme.ByteDanceCampLab3" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         
         <item name="colorPrimary">@color/purple_500</item>

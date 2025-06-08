@@ -5,7 +5,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.icu.text.SimpleDateFormat
 import android.util.Log
+import java.util.Date
+import java.util.Locale
 
 class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
     context, DATABASE_NAME, null, DATABASE_VERSION
@@ -56,21 +59,29 @@ class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
-    fun delRecord() {}
-
     fun updateRecord(record: WeatherRecord) {}
 
     fun findWeatherByCityAndTime(cityCode: String, date: String): List<WeatherRecord> {
         val db: SQLiteDatabase = writableDatabase
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+        val startDate =
+            dateFormat.parse(date) ?: throw IllegalArgumentException("Invalid date format")
+        val endDate = Date(startDate.time + 4 * 24 * 60 * 60 * 1000)
+
+        val startStr = dateFormat.format(startDate)
+        val endStr = dateFormat.format(endDate)
+
         val cursor = db.query(
             TABLE_NAME,
             weatherRecordColumns,
-            "${weatherRecordColumns[0]}=? AND ${weatherRecordColumns[1]}=?",
-            arrayOf(cityCode, date),
+            "${weatherRecordColumns[0]}=? AND ${weatherRecordColumns[1]} BETWEEN ? AND ?",
+            arrayOf(cityCode, startStr, endStr),
             null,
             null,
             null
         )
+
         val result = mutableListOf<WeatherRecord>()
         cursor.use { col ->
             while (cursor.moveToNext()) {

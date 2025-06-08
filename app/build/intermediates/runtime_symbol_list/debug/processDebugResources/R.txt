@@ -3239,6 +3239,7 @@ int id currentState 0x7f080085
 int id custom 0x7f080086
 int id customPanel 0x7f080087
 int id cut 0x7f080088
+int id dateText 0x7f0801fc
 int id date_picker_actions 0x7f080089
 int id decelerate 0x7f08008a
 int id decelerateAndComplete 0x7f08008b
@@ -3298,6 +3299,7 @@ int id fitXY 0x7f0800c0
 int id fixed 0x7f0800c1
 int id flip 0x7f0800c2
 int id floating 0x7f0800c3
+int id forecastRecycleView 0x7f0801fd
 int id forever 0x7f0800c4
 int id fragment_container_view_tag 0x7f0800c5
 int id frost 0x7f0800c6
@@ -3599,6 +3601,7 @@ int id view_tree_saved_state_registry_owner 0x7f0801ec
 int id view_tree_view_model_store_owner 0x7f0801ed
 int id visible 0x7f0801ee
 int id visible_removing_fragment_view_tag 0x7f0801ef
+int id weatherText 0x7f0801fe
 int id west 0x7f0801f0
 int id withText 0x7f0801f1
 int id with_icon 0x7f0801f2
@@ -3739,6 +3742,7 @@ int layout design_navigation_menu 0x7f0b0029
 int layout design_navigation_menu_item 0x7f0b002a
 int layout design_text_input_end_icon 0x7f0b002b
 int layout design_text_input_start_icon 0x7f0b002c
+int layout forecast_item 0x7f0b006c
 int layout ime_base_split_test_activity 0x7f0b002d
 int layout ime_secondary_split_test_activity 0x7f0b002e
 int layout m3_alert_dialog 0x7f0b002f
@@ -3852,6 +3856,7 @@ int string character_counter_content_description 0x7f0f002b
 int string character_counter_overflowed_content_description 0x7f0f002c
 int string character_counter_pattern 0x7f0f002d
 int string clear_text_end_icon_content_description 0x7f0f002e
+int string date 0x7f0f00a8
 int string error_a11y_label 0x7f0f002f
 int string error_icon_content_description 0x7f0f0030
 int string exposed_dropdown_menu_content_description 0x7f0f0031
@@ -3973,6 +3978,7 @@ int string side_sheet_accessibility_pane_title 0x7f0f00a4
 int string side_sheet_behavior 0x7f0f00a5
 int string status_bar_notification_info_overflow 0x7f0f00a6
 int string temperature 0x7f0f00a7
+int string weather 0x7f0f00a9
 int style AlertDialog_AppCompat 0x7f100000
 int style AlertDialog_AppCompat_Light 0x7f100001
 int style Animation_AppCompat_Dialog 0x7f100002

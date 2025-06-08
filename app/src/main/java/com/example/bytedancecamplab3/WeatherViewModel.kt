@@ -18,8 +18,8 @@ import java.io.InputStream
 import java.nio.charset.Charset
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-    private val _weather = MutableLiveData<WeatherRecord>()
-    val weather: LiveData<WeatherRecord> = _weather
+    private val _forecastList = MutableLiveData<List<WeatherRecord>>()
+    val forecastList: LiveData<List<WeatherRecord>> = _forecastList
     private val weatherService = WeatherServiceWithCache(application)
     private val assetManager = application.assets
     private val ADCODE_FILE = "adcode.json"
@@ -46,13 +46,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 
     fun getWeatherByCityCode(province: String, city: String) {
         val cityCode = _cityCodeMap.value?.get(province)?.get(city)
-        val date = Log.d("测试", "获取天气数据")
         viewModelScope.launch {
             try {
-                val response = withContext(Dispatchers.IO) {
+                val weather = withContext(Dispatchers.IO) {
                     weatherService.getWeather(cityCode!!)
                 }
-                _weather.postValue(response)
+                _forecastList.postValue(weather)
             } catch (e: Exception) {
                 Log.e("WeatherViewModel", "获取天气数据错误", e)
             }

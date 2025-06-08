@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.bytedancecamplab3.forecast.ForecastAdapter
 import com.example.bytedancecamplab3.network.CacheDataBaseHelper.WeatherRecord
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var citySpinner: Spinner
     private lateinit var provinceAdapter: ArrayAdapter<String>
     private lateinit var cityAdapter: ArrayAdapter<String>
+    private lateinit var forecastRecycleView: RecyclerView
+    private lateinit var forecastAdapter: ForecastAdapter
     private var provinceList = emptyList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,38 +43,29 @@ class MainActivity : AppCompatActivity() {
 
         bind()
         setSpinners()
+        setRecycleView()
+        setObservation()
 
-        weatherViewModel.cityCodeMap.observe(this) { provinceMap ->
-            updateProvinceAdapter(
-                provinceMap.keys.toList()
-            )
-        }
-
-        weatherViewModel.cityList.observe(this) { cities ->
-            updateCityAdapter(cities)
-        }
-
-        weatherViewModel.weather.observe(this) { data -> updateWeather(data) }
     }
 
-    private fun updateWeather(data: WeatherRecord) {
+    private fun updateUI(data: List<WeatherRecord>) {
         Log.d("测试", "UI更新数据:${data}")
-        tempText.text = "温度：${data.temp}"
+        tempText.text = "温度：${data[0].temp}"
+        forecastAdapter.submitList(data)
     }
 
     private fun bind() {
         tempText = findViewById(R.id.tempText)
         provinceSpinner = findViewById(R.id.provinceSpinner)
         citySpinner = findViewById(R.id.citySpinner)
+        forecastRecycleView = findViewById(R.id.forecastRecycleView)
     }
 
     private fun setSpinners() {
-        // 初始化省份适配器
         provinceAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item)
         provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         provinceSpinner.adapter = provinceAdapter
 
-        // 初始化城市适配器
         cityAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item)
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         citySpinner.adapter = cityAdapter
@@ -105,6 +102,31 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+    }
+
+    private fun setRecycleView() {
+        forecastRecycleView.layoutManager = LinearLayoutManager(this)
+        forecastRecycleView.addItemDecoration(
+            DividerItemDecoration(
+                this, DividerItemDecoration.HORIZONTAL
+            )
+        )
+        forecastAdapter = ForecastAdapter()
+        forecastRecycleView.adapter = forecastAdapter
+    }
+
+    private fun setObservation() {
+        weatherViewModel.cityCodeMap.observe(this) { provinceMap ->
+            updateProvinceAdapter(
+                provinceMap.keys.toList()
+            )
+        }
+
+        weatherViewModel.cityList.observe(this) { cities ->
+            updateCityAdapter(cities)
+        }
+
+        weatherViewModel.forecastList.observe(this) { data -> updateUI(data) }
     }
 
     private fun updateProvinceAdapter(provinces: List<String>) {

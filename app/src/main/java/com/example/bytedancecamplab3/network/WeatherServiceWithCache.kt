@@ -13,12 +13,12 @@ class WeatherServiceWithCache(private val context: Context) {
     private val weatherService = RetrofitClient.instance
     private val cacheDataBaseHelper = CacheDataBaseHelper(context)
 
-    suspend fun getWeather(cityCode: String): WeatherRecord {
+    suspend fun getWeather(cityCode: String): List<WeatherRecord> {
         val cache = cacheDataBaseHelper.findWeatherByCityAndTime(cityCode, getCurrentDate())
-        if (cache.isNotEmpty()) {
-            return cache[0]
+        if (cache.size == 4) {
+            return cache
         } else {
-            var ret = WeatherRecord(cityCode, getCurrentDate(), "", "")
+            var ret = emptyList<WeatherRecord>()
             try {
                 val response = withContext(Dispatchers.IO) {
                     weatherService.getWeather(cityCode)
@@ -38,9 +38,9 @@ class WeatherServiceWithCache(private val context: Context) {
         return sdf.format(calendar.time)
     }
 
-    private fun processResponse(response: WeatherResponse?): WeatherRecord {
+    private fun processResponse(response: WeatherResponse?): List<WeatherRecord> {
         if (response == null) {
-            return WeatherRecord("", "", "", "")
+            return emptyList()
         }
         val forecast = response.forecasts[0]
         val cityCode = forecast.adcode
@@ -55,6 +55,6 @@ class WeatherServiceWithCache(private val context: Context) {
             }
             records.add(record)
         }
-        return records[0]
+        return records
     }
 }

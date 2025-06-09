@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.bytedancecamplab3.forecast.SubscribeDataBaseHelper
+import com.example.bytedancecamplab3.forecast.SubscribeDataBaseHelper.Subscribe
 import com.example.bytedancecamplab3.network.CacheDataBaseHelper.WeatherRecord
 import com.example.bytedancecamplab3.network.WeatherServiceWithCache
 import com.google.gson.Gson
@@ -20,6 +22,8 @@ import java.nio.charset.Charset
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
     private val _forecastList = MutableLiveData<List<WeatherRecord>>()
     val forecastList: LiveData<List<WeatherRecord>> = _forecastList
+    private val _subscribeList = MutableLiveData<List<Subscribe>>()
+    val subscribeList: LiveData<List<Subscribe>> = _subscribeList
     private val weatherService = WeatherServiceWithCache(application)
     private val assetManager = application.assets
     private val ADCODE_FILE = "adcode.json"
@@ -27,6 +31,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     val cityCodeMap: LiveData<Map<String, Map<String, String>>> get() = _cityCodeMap
     private val _cityList = MutableLiveData<List<String>>()
     val cityList: LiveData<List<String>> get() = _cityList
+    private val subscribeDataBaseHelper = SubscribeDataBaseHelper(application)
 
     init {
         viewModelScope.launch {
@@ -39,19 +44,26 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    fun refreshSubscribeList(){
+        _subscribeList.postValue(subscribeDataBaseHelper.getAll())
+    }
+
     fun updateCityOptions(province: String) {
         val cities = _cityCodeMap.value?.get(province)?.keys?.toList() ?: emptyList()
         _cityList.postValue(cities)
     }
 
-    fun getWeatherByCityCode(province: String, city: String) {
-        val cityCode = _cityCodeMap.value?.get(province)?.get(city)
+    fun getWeatherByCityCodes(subscribes: List<Subscribe>) {
         viewModelScope.launch {
             try {
-                val weather = withContext(Dispatchers.IO) {
-                    weatherService.getWeather(cityCode!!)
+                var weathers = mutableListOf<WeatherRecord>()
+                for (subscribe in subscribes) {
+                    val weather = withContext(Dispatchers.IO) {
+                        weatherService.getWeather(subscribe.cityCode)
+                    }
+                    weathers.add(weather[0])
                 }
-                _forecastList.postValue(weather)
+                _forecastList.postValue(weathers)
             } catch (e: Exception) {
                 Log.e("WeatherViewModel", "获取天气数据错误", e)
             }
@@ -83,22 +95,18 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 val json = readJsonFromAssets()
                 val gson = Gson()
                 val provinces = gson.fromJson(json, Array<Province>::class.java).toList()
-                Log.d("测试", "省份列表:${provinces}")
                 val ret = provinces.associate { province ->
                     province.name to province.city.associate { city ->
                         city.name to city.adcode
                     }
                 }
-                Log.d("测试", "解析返回值:${ret}")
                 ret
             } catch (e: IOException) {
                 Log.e("WeatherViewModel", "读取文件失败", e)
-                Log.d("测试", "读取文件失败")
                 emptyMap<String, Map<String, String>>()
                 throw RuntimeException("读取文件失败: ${e.message}")
             } catch (e: JsonSyntaxException) {
                 Log.e("WeatherViewModel", "json解析失败", e)
-                Log.d("测试", "json解析失败")
                 emptyMap<String, Map<String, String>>()
                 throw RuntimeException("JSON解析失败: ${e.message}")
             } catch (e: Exception) {

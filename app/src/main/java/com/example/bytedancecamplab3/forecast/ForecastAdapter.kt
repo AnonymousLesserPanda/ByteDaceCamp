@@ -14,12 +14,12 @@ class ForecastAdapter() :
     ListAdapter<WeatherRecord, ForecastAdapter.ForecastViewHolder>(ForecastDiffCallBack()) {
 
     inner class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val dateText: TextView = itemView.findViewById(R.id.dateText)
+        private val citiText: TextView = itemView.findViewById(R.id.cityText)
         private val tempText: TextView = itemView.findViewById(R.id.tempText)
         private val weatherText: TextView = itemView.findViewById(R.id.weatherText)
 
         fun bind(item: WeatherRecord) {
-            dateText.text = item.date
+            citiText.text = item.city
             tempText.text = "${item.temp}℃"
             weatherText.text = item.weather
         }

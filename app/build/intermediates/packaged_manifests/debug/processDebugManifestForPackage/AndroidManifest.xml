@@ -30,6 +30,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.ByteDanceCampLab3" >
         <activity
+            android:name="com.example.bytedancecamplab3.AddCityActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.bytedancecamplab3.MainActivity"
             android:exported="true" >
             <intent-filter>

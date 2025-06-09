@@ -14,14 +14,18 @@ class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
     context, DATABASE_NAME, null, DATABASE_VERSION
 ) {
     companion object {
-        private const val DATABASE_NAME = "Note.db"
+        private const val DATABASE_NAME = "Cache.db"
         private const val DATABASE_VERSION = 1
         private const val TABLE_NAME = "weather_record"
-        private val weatherRecordColumns = arrayOf("cityCode", "date", "temp", "weather")
+        private val weatherRecordColumns = arrayOf("cityCode", "city", "date", "temp", "weather")
     }
 
     data class WeatherRecord(
-        val cityCode: String, val date: String, val temp: String, val weather: String
+        val cityCode: String,
+        val city: String,
+        val date: String,
+        val temp: String,
+        val weather: String
     )
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -31,7 +35,8 @@ class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
         ${weatherRecordColumns[1]} TEXT NOT NULL,
         ${weatherRecordColumns[2]} TEXT NOT NULL,        
         ${weatherRecordColumns[3]} TEXT NOT NULL,
-       PRIMARY KEY(${weatherRecordColumns[0]},${weatherRecordColumns[1]})
+        ${weatherRecordColumns[4]} TEXT NOT NULL,
+       PRIMARY KEY(${weatherRecordColumns[0]},${weatherRecordColumns[2]})
     )
     """.trimIndent()
         db?.execSQL(createTableQuery)
@@ -46,9 +51,10 @@ class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
         return try {
             val values = ContentValues().apply {
                 put(weatherRecordColumns[0], record.cityCode)
-                put(weatherRecordColumns[1], record.date)
-                put(weatherRecordColumns[2], record.temp)
-                put(weatherRecordColumns[3], record.weather)
+                put(weatherRecordColumns[1], record.city)
+                put(weatherRecordColumns[2], record.date)
+                put(weatherRecordColumns[3], record.temp)
+                put(weatherRecordColumns[4], record.weather)
             }
             val ret = db.insert(TABLE_NAME, null, values)
             Log.i("DataBase", "添加缓存成功")
@@ -75,7 +81,7 @@ class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
         val cursor = db.query(
             TABLE_NAME,
             weatherRecordColumns,
-            "${weatherRecordColumns[0]}=? AND ${weatherRecordColumns[1]} BETWEEN ? AND ?",
+            "${weatherRecordColumns[0]}=? AND ${weatherRecordColumns[2]} BETWEEN ? AND ?",
             arrayOf(cityCode, startStr, endStr),
             null,
             null,
@@ -86,7 +92,11 @@ class CacheDataBaseHelper(context: Context) : SQLiteOpenHelper(
         cursor.use { col ->
             while (cursor.moveToNext()) {
                 val record = WeatherRecord(
-                    col.getString(0), col.getString(1), col.getString(2), col.getString(3)
+                    col.getString(0),
+                    col.getString(1),
+                    col.getString(2),
+                    col.getString(3),
+                    col.getString(4)
                 )
                 result.add(record)
             }

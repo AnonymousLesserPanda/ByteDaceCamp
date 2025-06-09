@@ -5,10 +5,10 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/dateText"
+        android:id="@+id/cityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/date"
+        android:hint="@string/city"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/temperature"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toRightOf="@id/dateText"
+        app:layout_constraintLeft_toRightOf="@id/cityText"
         app:layout_constraintRight_toLeftOf="@id/weatherText"
         app:layout_constraintTop_toTopOf="parent" />
 

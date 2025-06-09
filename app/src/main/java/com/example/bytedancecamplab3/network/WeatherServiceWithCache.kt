@@ -44,10 +44,11 @@ class WeatherServiceWithCache(private val context: Context) {
         }
         val forecast = response.forecasts[0]
         val cityCode = forecast.adcode
+        val city = forecast.city
         val casts = forecast.casts
         val records: MutableList<WeatherRecord> = mutableListOf()
         casts.forEach { cast ->
-            val record = WeatherRecord(cityCode, cast.date, cast.daytemp, cast.dayweather)
+            val record = WeatherRecord(cityCode, city, cast.date, cast.daytemp, cast.dayweather)
             if (cacheDataBaseHelper.findWeatherByCityAndTime(cityCode, cast.date).isEmpty()) {
                 cacheDataBaseHelper.addRecord(record)
             } else {

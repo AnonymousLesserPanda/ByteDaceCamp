@@ -7,7 +7,10 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="add">+</string>
     <string name="app_name">ByteDanceCampLab3</string>
+    <string name="city">城市</string>
+    <string name="confirm">确定</string>
     <string name="date">日期</string>
     <string name="temperature">温度</string>
     <string name="weather">天气</string>

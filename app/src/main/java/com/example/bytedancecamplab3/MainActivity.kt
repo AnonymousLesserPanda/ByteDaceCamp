@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bytedancecamplab3.forecast.CityForecastFragment
 import com.example.bytedancecamplab3.forecast.ForecastAdapter
 import com.example.bytedancecamplab3.forecast.SubscribeDataBaseHelper.Subscribe
 import com.example.bytedancecamplab3.network.CacheDataBaseHelper.WeatherRecord
@@ -70,5 +71,16 @@ class MainActivity : AppCompatActivity() {
         )
         forecastAdapter = ForecastAdapter()
         forecastRecycleView.adapter = forecastAdapter
+
+        forecastAdapter.setOnItemClickListener { weatherRecord ->
+            showCityForecast(weatherRecord)
+        }
+    }
+
+    private fun showCityForecast(item: WeatherRecord) {
+        Log.d("测试", "唤起fragment")
+        val fragment = CityForecastFragment.newInstance(item.cityCode, this.application)
+        supportFragmentManager.beginTransaction().add(R.id.cityForecast, fragment, "CITY_FORECAST")
+            .addToBackStack(null).commit()
     }
 }

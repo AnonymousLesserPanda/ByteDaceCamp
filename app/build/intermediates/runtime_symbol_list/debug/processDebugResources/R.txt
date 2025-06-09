@@ -3224,6 +3224,7 @@ int id checkbox 0x7f080072
 int id checked 0x7f080073
 int id chronometer 0x7f080074
 int id circle_center 0x7f080075
+int id cityForecast 0x7f080206
 int id citySpinner 0x7f080076
 int id cityText 0x7f080077
 int id clear_text 0x7f080078
